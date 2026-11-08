@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>for you 🤍</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#ffd6e0;
+    --pink-deep:#f7a8c4;
+    --lilac:#e6d9ff;
+    --cream:#fff7f0;
+    --text:#6b4b5b;
+    --card:#ffffff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:'Quicksand',sans-serif;
+    color:var(--text);
+    background:linear-gradient(160deg,#ffe9f0 0%,#f3e8ff 50%,#fff7f0 100%);
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  /* ---------- floating hearts background ---------- */
+  .hearts-bg{position:fixed;inset:0;pointer-events:none;z-index:0;}
+  .heart-bg{
+    position:absolute;bottom:-40px;
+    font-size:20px;opacity:.35;
+    animation:floatUp linear infinite;
+  }
+  @keyframes floatUp{
+    0%{transform:translateY(0) rotate(0deg);opacity:0;}
+    10%{opacity:.35;}
+    90%{opacity:.2;}
+    100%{transform:translateY(-110vh) rotate(25deg);opacity:0;}
+  }
+  main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:48px 20px 80px;}
+
+  /* ---------- hero ---------- */
+  header{text-align:center;padding:30px 0 10px;}
+  h1{
+    font-family:'Caveat',cursive;
+    font-size:clamp(3rem,9vw,4.6rem);
+    color:#d4648f;line-height:1.1;
+  }
+  .sub{font-size:1.15rem;margin-top:10px;font-weight:500;}
+  .wave{font-size:2.2rem;display:inline-block;animation:wave 2.5s infinite;transform-origin:70% 70%;}
+  @keyframes wave{0%,60%,100%{transform:rotate(0);}10%,30%{transform:rotate(14deg);}20%,40%{transform:rotate(-8deg);}}
+
+  /* ---------- cards ---------- */
+  section{margin-top:44px;}
+  .card{
+    background:var(--card);
+    border-radius:26px;
+    padding:30px 28px;
+    box-shadow:0 12px 34px rgba(214,120,160,.16);
+    border:2px solid rgba(255,214,224,.7);
+  }
+  h2{font-family:'Caveat',cursive;font-size:2.1rem;color:#c95d87;margin-bottom:14px;}
+
+  /* ---------- hug button ---------- */
+  .hug-zone{text-align:center;}
+  .hug-btn{
+    font-family:'Quicksand',sans-serif;
+    font-weight:700;font-size:1.15rem;
+    background:linear-gradient(135deg,var(--pink-deep),#ffb3d1);
+    color:#fff;border:none;border-radius:50px;
+    padding:18px 40px;cursor:pointer;
+    box-shadow:0 8px 22px rgba(247,168,196,.55);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .hug-btn:hover{transform:scale(1.05) translateY(-2px);box-shadow:0 12px 28px rgba(247,168,196,.7);}
+  .hug-btn:active{transform:scale(.96);}
+  #hugMsg{
+    margin-top:18px;font-family:'Caveat',cursive;
+    font-size:1.7rem;color:#b34a76;min-height:2.4rem;
+    opacity:0;transition:opacity .5s;
+  }
+  #hugMsg.show{opacity:1;}
+  .burst-heart{
+    position:fixed;pointer-events:none;z-index:99;
+    animation:burst 1.4s ease-out forwards;
+  }
+  @keyframes burst{
+    0%{transform:translate(-50%,-50%) scale(.4);opacity:1;}
+    100%{transform:translate(var(--tx),var(--ty)) scale(1.3) rotate(var(--rot));opacity:0;}
+  }
+
+  /* ---------- comfort jar ---------- */
+  .jar-flex{display:flex;gap:24px;align-items:center;flex-wrap:wrap;justify-content:center;}
+  .jar{
+    width:130px;height:160px;cursor:pointer;position:relative;
+    border:4px solid #d8b4e2;border-top:none;
+    border-radius:14px 14px 34px 34px;
+    background:linear-gradient(180deg,#fdf3ff,#f3e3fb);
+    box-shadow:inset 0 6px 14px rgba(180,120,200,.18);
+    transition:transform .2s;
+  }
+  .jar:hover{transform:rotate(-3deg) scale(1.04);}
+  .jar::before{
+    content:"";position:absolute;top:-22px;left:-8px;right:-8px;height:20px;
+    background:#d8b4e2;border-radius:8px;
+  }
+  .jar .note{
+    position:absolute;font-size:26px;
+    animation:none;
+  }
+  .jar-label{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:.85rem;font-weight:700;color:#a56dbb;}
+  #noteOut{
+    flex:1;min-width:230px;
+    background:#fff0f6;border-radius:18px;padding:22px;
+    font-family:'Caveat',cursive;font-size:1.55rem;color:#a94b74;
+    min-height:90px;display:flex;align-items:center;justify-content:center;text-align:center;
+  }
+
+  /* ---------- tips grid ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+  .tip{
+    background:var(--cream);border-radius:18px;padding:18px;
+    border:2px solid #ffe3ec;
+  }
+  .tip .emoji{font-size:1.9rem;}
+  .tip h3{font-size:1.02rem;margin:8px 0 6px;color:#c95d87;}
+  .tip p{font-size:.9rem;line-height:1.5;}
+
+  /* ---------- menu ---------- */
+  .menu-item{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:14px 0;border-bottom:1px dashed #ffd6e0;
+  }
+  .menu-item:last-child{border-bottom:none;}
+  .menu-item .emoji{font-size:1.7rem;}
+  .menu-item b{color:#c95d87;}
+  .menu-item p{font-size:.92rem;margin-top:2px;}
+
+  /* ---------- letter ---------- */
+  .letter{
+    font-family:'Caveat',cursive;font-size:1.65rem;line-height:1.6;color:#8a4a68;
+    background:repeating-linear-gradient(#fff, #fff 34px, #ffe9f0 35px);
+    border-radius:18px;padding:26px 30px;border:2px solid #ffd6e0;
+  }
+  .sign{text-align:right;margin-top:14px;font-size:1.5rem;color:#d4648f;}
+
+  footer{text-align:center;margin-top:60px;font-size:.85rem;opacity:.6;}
+
+  @media(max-width:520px){
+    .jar-flex{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<main>
+  <!-- ✏️ EDIT: her name below -->
+  <header>
+    <h1>hey, <span id="herName">mama rayray </span> <span class="wave">🤍</span></h1>
+    <p class="sub">I made this little stupid website for you.<br>Because today kinda sucks — and you deserve better than that, it's lit nothing bas kaka idk what to do I just wanna help.</p>
+  </header>
+
+  <!-- HUG BUTTON -->
+  <section class="card hug-zone">
+    <h2>first things first…</h2>
+    <button class="hug-btn" id="hugBtn">🫂 press for a hug</button>
+    <div id="hugMsg"></div>
+  </section>
+
+  <!-- COMFORT JAR -->
+  <section class="card">
+    <h2>comfort jar 🫙</h2>
+    <p style="margin-bottom:18px;">Click the jar whenever you need a little reminder.</p>
+    <div class="jar-flex">
+      <div class="jar" id="jar">
+        <span class="note" style="top:22px;left:18px;transform:rotate(-14deg);">💌</span>
+        <span class="note" style="top:48px;left:52px;transform:rotate(10deg);">🌟</span>
+        <span class="note" style="top:80px;left:30px;transform:rotate(-6deg);">💌</span>
+        <span class="note" style="top:60px;left:74px;transform:rotate(18deg);">🌟</span>
+        <div class="jar-label">take one!</div>
+      </div>
+      <div id="noteOut">click the jar 🫙✨</div>
+    </div>
+  </section>
+
+  <!-- CARE TIPS -->
+  <section class="card">
+    <h2>the official feel-better kit 🩹</h2>
+    <div class="grid">
+      <div class="tip"><span class="emoji">🔥</span><h3>Heat is magic</h3><p>Hot water bottle or heating pad on your belly works almost as well as painkillers for cramps. Cozy blanket + heat = heaven.</p></div>
+      <div class="tip"><span class="emoji">🍵</span><h3>Warm drinks</h3><p>Chamomile or ginger tea actually helps relax the muscles. Coffee can make cramps worse — switch to tea today.</p></div>
+      <div class="tip"><span class="emoji">🍫</span><h3>Dark chocolate</h3><p>Rich in magnesium, which helps with cramps. So yes — it's basically medicine. Doctor's orders.</p></div>
+      <div class="tip"><span class="emoji">🛏️</span><h3>Rest, guilt-free</h3><p>Curling up with your knees to your chest eases the pressure. Watch the show. Nap. Zero productivity required.</p></div>
+      <div class="tip"><span class="emoji">💧</span><h3>Water + snacks</h3><p>Staying hydrated and eating small things (bananas, yogurt, nuts) keeps the cramps from getting angrier.</p></div>
+      <div class="tip"><span class="emoji">💊</span><h3>Nothing wrong with meds</h3><p>Ibuprofen works best if taken early. Don't be a hero — comfort is the whole mission today.</p></div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="card">
+    <h2>today's menu — pick anything 🍽️</h2>
+    <!-- ✏️ EDIT: personalize these with what YOU can actually do/bring -->
+    <div class="menu-item"><span class="emoji">🍫</span><div><b>Snack delivery</b><p>Chocolate? Chips? Your favorite? Say the word and it's on the way.</p></div></div>
+    <div class="menu-item"><span class="emoji">🎬</span><div><b>Movie night</b><p>Blanket, terrible rom-com, zero judgment. I'll bring the snacks.</p></div></div>
+    <div class="menu-item"><span class="emoji">🍵</span><div><b>Tea service</b><p>I'll make it exactly how you like it. You don't move an inch.</p></div></div>
+    <div class="menu-item"><span class="emoji">📞</span><div><b>On-call cuddle/voice service</b><p>Call or text me any hour. I'll pick up. Every time.</p></div></div>
+    <div class="menu-item"><span class="emoji">🛒</span><div><b>Supply run</b><p>Need anything? Pads, painkillers, ice cream at 11pm? No questions asked.</p></div></div>
+  </section>
+
+  <!-- LETTER -->
+  <section>
+    <div class="letter">
+      <!-- ✏️ EDIT: write YOUR letter here -->
+      Hey you,<br><br>
+      I know today hurts, and I hate that I can't fix it and I can't help it.
+      But I can do this: be here, giving deep hugs, giving kisses, and remind you how
+      incredible you are even when you're curled up in a blanket fort
+      cursing the universe.<br><br>
+      You take ker of everyone so easily — let me take ker of you today.<br><br>
+      Rest. Hydrate. Text me when you want anything.
+      <div class="sign">— yours 🤍</div>
+    </div>
+  </section>
+
+  <footer>made easy, but trust me I learnt it just now and just for you 🤍</footer>
+</main>
+
+<script>
+/* ---------- floating background hearts ---------- */
+const bg = document.getElementById('heartsBg');
+const bgEmojis = ['💗','🤍','✨','🩷','🌸'];
+for(let i=0;i<18;i++){
+  const h = document.createElement('span');
+  h.className = 'heart-bg';
+  h.textContent = bgEmojis[Math.floor(Math.random()*bgEmojis.length)];
+  h.style.left = Math.random()*100 + 'vw';
+  h.style.animationDuration = (9 + Math.random()*10) + 's';
+  h.style.animationDelay = (Math.random()*10) + 's';
+  h.style.fontSize = (14 + Math.random()*20) + 'px';
+  bg.appendChild(h);
+}
+
+/* ---------- hug button ---------- */
+const hugMsgs = [
+  "hug #1 delivered ✨ (there's an unlimited supply, by the way)",
+  "you're doing way better than you think 💗",
+  "if I were there in da future: blanket fort, snacks, your favorite show. deal?",
+  "period cramps are temporary, how much I love you is not 😌",
+  "reminder: you're allowed to do absolutely nothing today",
+  "sending you my warmest, softest, squishiest virtual hug 🫂",
+  "you + blanket + me = the only plan that matters today",
+  "you've got this. and you've also got me little one. 🤍"
+];
+let hugCount = 0;
+const hugMsg = document.getElementById('hugMsg');
+document.getElementById('hugBtn').addEventListener('click', (e)=>{
+  hugCount++;
+  hugMsg.textContent = hugMsgs[(hugCount-1) % hugMsgs.length];
+  hugMsg.classList.add('show');
+  for(let i=0;i<10;i++) spawnHeart(e.clientX, e.clientY);
+});
+
+function spawnHeart(x,y){
+  const h = document.createElement('span');
+  h.className = 'burst-heart';
+  h.textContent = ['💗','💖','🤍','✨','🩷'][Math.floor(Math.random()*5)];
+  h.style.left = x+'px'; h.style.top = y+'px';
+  h.style.setProperty('--tx', (Math.random()*220-110)+'px');
+  h.style.setProperty('--ty', (Math.random()*-180-40)+'px');
+  h.style.setProperty('--rot', (Math.random()*60-30)+'deg');
+  h.style.fontSize = (16+Math.random()*20)+'px';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(), 1500);
+}
+
+/* ---------- comfort jar ---------- */
+const notes = [
+  "you're literally my favorite people. like, top of the list.",
+  "even on your worst days, you're still the best part of mine.",
+  "cramps: 0, you: 1. you've survived every single one so far. 💪",
+  "the world is just better with you in it. statistically proven. by me.",
+  "your smile? unfair advantage. your laugh? illegal levels of cute.",
+  "you don't have to be strong today. that's my job. 😌",
+  "if overthinking burned calories, you'd be an athlete — but rest instead, it's cuter.",
+  "whatever today throws at you, we'll handle it together.",
+  "you are so, so loved. this jar is just the messenger. 💌"
+];
+const jar = document.getElementById('jar');
+const noteOut = document.getElementById('noteOut');
+let lastNote = -1;
+jar.addEventListener('click', ()=>{
+  let i;
+  do { i = Math.floor(Math.random()*notes.length); } while(i === lastNote);
+  lastNote = i;
+  noteOut.style.opacity = 0;
+  setTimeout(()=>{ noteOut.textContent = notes[i]; noteOut.style.opacity = 1; }, 180);
+  const r = jar.getBoundingClientRect();
+  for(let k=0;k<6;k++) spawnHeart(r.left+r.width/2, r.top+r.height/3);
+});
+noteOut.style.transition = 'opacity .18s';
+
+/* ---------- click anywhere = tiny sparkle (desktop only) ---------- */
+document.addEventListener('click', (e)=>{
+  if(Math.random() < 0.3) spawnHeart(e.clientX, e.clientY);
+});
+</script>
+</body>
+</html>
